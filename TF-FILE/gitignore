@@ -1,3 +1,4 @@
 .terraform 
-*.state
+terraform.state
+terraform.tfstate.backup
 secret.txt
