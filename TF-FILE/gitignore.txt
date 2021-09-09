@@ -1,4 +1,0 @@
-.terraform
-.terraform.locl.hcl
-.key
-.secret.txt
