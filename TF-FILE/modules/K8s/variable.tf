@@ -1,16 +1,18 @@
 variable "client_id" {
     default = ""
     description = "client id for SPN"
-  
+    sensitive = true
 }
 variable "client_sec" {
   default = ""
   description = "client secret for SPN"
+  sensitive = true
 }
 
 variable "ssh" {
     default = ""
     description = "SSH key"
+    sensitive = true
 }
 variable "aks-subnet-id" {
   type = string 
