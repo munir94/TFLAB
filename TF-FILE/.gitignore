@@ -1,5 +1,5 @@
 .terraform 
 terraform.state
 terraform.tfstate.backup
-terraform.lock.hcl
+.terraform.lock.hcl
 secret.txt
