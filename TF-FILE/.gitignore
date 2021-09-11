@@ -3,3 +3,4 @@ terraform.state
 terraform.tfstate.backup
 .terraform.lock.hcl
 secret.txt
+*.tfvar
