@@ -9,11 +9,13 @@ resource "azurerm_resource_group" "vnet-rg" {
 }
 
  resource "azurerm_virtual_network" "vnet" {
+     #count                = length(var.vnet-name)
+     #count                = var.vnet-name
      name                 = var.vnet-name
      resource_group_name  = azurerm_resource_group.vnet-rg.name
      location             = azurerm_resource_group.vnet-rg.location
      address_space        = var.vnet-range
-    dns_servers           = var.vnet-dns
+     dns_servers          = var.vnet-dns
      
  }
 
@@ -26,8 +28,6 @@ resource "azurerm_resource_group" "vnet-rg" {
    address_prefixes        = [var.subnets-range[count.index]]  
 
    #needed [[]] to be treated as one 
-   
-
  }
 
   locals {
@@ -35,4 +35,8 @@ resource "azurerm_resource_group" "vnet-rg" {
     for index, subnet in azurerm_subnet.subnet :
     subnet.name => subnet.id
   }
-}
+  # azurerm_virtual_network = {
+  #   for index, address in address_space :
+  #   vnet.name => vnet.id
+  #}
+  }
