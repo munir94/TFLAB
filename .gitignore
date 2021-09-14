@@ -1,8 +1,7 @@
 .terraform 
-terraform.state
+terraform.tfstate
 terraform.tfstate.backup
 .terraform.lock.hcl
 secret.txt
 *.tfvar
 backup.txt
-main.tf

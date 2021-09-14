@@ -9,12 +9,13 @@ variable "peer-rg" {
   default = ""
    
 }
-variable "vnet-id" {
+variable "source-vnet-name" {
   default   = ""
   sensitive = true  
 }
 variable "target-vnet-id" {
-  default   = ""
+  type = string
+  default   = "false"
   sensitive = true  
 }
 
@@ -23,7 +24,7 @@ variable "use-remote-gw" {
   sensitive = true  
 }
 
-variable "vnet-creation" {
-  default   = ""
+# variable "vnet-creation" {
+#   default   = ""
    
-}
+# }

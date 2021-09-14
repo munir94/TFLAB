@@ -16,3 +16,7 @@ output "vnet-id" {
   description = "ID of the vnet vNET"
   value       = azurerm_virtual_network.vnet.id
 }
+output "vnet-name" {
+  description = "Name of the vnet vNET"
+  value       = azurerm_virtual_network.vnet.name
+}
