@@ -18,10 +18,6 @@ resource "azurerm_kubernetes_cluster" "aks1" {
     type = "VirtualMachineScaleSets"
     os_disk_size_gb = 127
     max_pods = 80
-    #vnet_subnet_id = "/subscriptions/ee31172f-3e56-4f55-94e8-6adce8c23e83/resourceGroups/PROD-RG/providers/Microsoft.Network/virtualNetworks/PROD-vNET/subnets/PROD-AKS-SUBNET"
-    #vnet_subnet_id = module.vnet.akssubnet_id
-    #vnet_subnet_id = data.azurerm_subnet.aks-snet.id
-    #vnet_subnet_id = data.terraform_remote_state.vnet.outputs.akssubnet_id
     vnet_subnet_id = var.aks-subnet-id
       
       
