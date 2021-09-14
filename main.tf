@@ -49,6 +49,6 @@ module "peer-vnet02-01" {
   peer-rg                  = module.vnet01.vnet-rg
   source-vnet-name         = module.vnet01.vnet-name
   target-vnet-id           = module.vnet00.vnet-id
-  use-remote-gw            = "false"
+  use-remote-gw            = "false" 
   
 }
