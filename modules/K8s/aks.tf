@@ -34,6 +34,7 @@ resource "azurerm_kubernetes_cluster" "aks1" {
       key_data = var.ssh
     }
   }
+  #TODO Windows Profile
   network_profile {
     network_plugin = "azure"
     load_balancer_sku = "Standard"
