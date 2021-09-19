@@ -1,0 +1,33 @@
+
+
+CALL AKS MODULE
+ module "myaks" {
+   source         = "./modules/k8s"
+   aks-name       = "aks01"
+   aks-dns        = "aks01-dns"
+   aks-version    = "1.20.9"
+   aks-subnet-id  = module.vnet01.vnet_subnets.1
+
+ }
+
+
+CALL VNET MODULE
+ module "vnet00" {
+  source         = "./modules/vnet"
+  vnet-name      = "vNet-00-hub"
+  vnet-range     = ["192.168.16.0/24","172.16.0.0/22"]
+  subnets-name   = ["subnet01","aks-subnet"]
+  subnets-range  = ["192.168.16.0/28","172.16.0.0/24"]
+  vnet-location  = "southeastasia"
+}
+
+CALL VNET Peering MODULE
+module "peer-vnet01-02" {
+  source                  = "./modules/vnet-peering"
+  peer-name               = "Peer1"
+  peer-rg                 = module.vnet00.vnet-rg
+  source-vnet-name        = module.vnet00.vnet-name
+  target-vnet-id          = module.vnet01.vnet-id
+  use-remote-gw           = "False"
+ 
+}
