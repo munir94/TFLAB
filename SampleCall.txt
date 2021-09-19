@@ -13,7 +13,7 @@ CALL AKS MODULE
 
 CALL VNET MODULE
  module "vnet00" {
-  source         = "./modules/vnet"
+  source         = "./modules/network/vnet"
   vnet-name      = "vNet-00-hub"
   vnet-range     = ["192.168.16.0/24","172.16.0.0/22"]
   subnets-name   = ["subnet01","aks-subnet"]
@@ -23,7 +23,7 @@ CALL VNET MODULE
 
 CALL VNET Peering MODULE
 module "peer-vnet01-02" {
-  source                  = "./modules/vnet-peering"
+  source                  = "./modules/network/vnet-peering"
   peer-name               = "Peer1"
   peer-rg                 = module.vnet00.vnet-rg
   source-vnet-name        = module.vnet00.vnet-name
