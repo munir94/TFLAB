@@ -14,8 +14,14 @@ provider "azurerm" {
   
   features {}
 }
-module "law-01" {
-  source = "./modules/diagnostic/log-analytics"
+module "peer-vnet01-02" {
+  source                  = "./modules/network/vnet-peering"
+  peer-name               = module.vnet00.vnet-name - " Peer To " - module.vnet01.vnet-name
+  peer-rg                 = module.vnet00.vnet-rg
+  source-vnet-name        = module.vnet00.vnet-name
+  target-vnet-id          = module.vnet01.vnet-id
+  use-remote-gw           = "False"
+ 
 }
 
 

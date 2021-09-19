@@ -31,3 +31,8 @@ module "peer-vnet01-02" {
   use-remote-gw           = "False"
  
 }
+
+CALL Log Analytic MODULE 
+module "law-01" {
+  source = "./modules/diagnostic/log-analytics"
+}
