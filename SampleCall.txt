@@ -24,7 +24,7 @@ CALL VNET MODULE
 CALL VNET Peering MODULE
 module "peer-vnet01-02" {
   source                  = "./modules/network/vnet-peering"
-  peer-name               = "Peer1"
+  peer-name               = "${module.vnet00.vnet-name}-PeerTo-${module.vnet01.vnet-name} "
   peer-rg                 = module.vnet00.vnet-rg
   source-vnet-name        = module.vnet00.vnet-name
   target-vnet-id          = module.vnet01.vnet-id
