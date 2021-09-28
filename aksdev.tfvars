@@ -1,0 +1,7 @@
+ #vnetvar
+  
+#aksvar
+  
+
+#subid
+ 
