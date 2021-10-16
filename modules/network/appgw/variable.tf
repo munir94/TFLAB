@@ -15,13 +15,17 @@ variable "agname" {
 }
 
 variable "ag_sku" {
-  default = "Standard_V2"
+  default = "Standard_v2"
 }
 
 variable "ag_tier" {
-  default = "Standard_V2"
+  default = "Standard_v2"
 }
 
+variable "test_fqdn" {
+  type = string 
+  default = "Dummy"
+}
 variable "ag_min" {
   default = 0
 }

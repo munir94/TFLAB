@@ -20,3 +20,8 @@ output "vnet-name" {
   description = "Name of the vnet vNET"
   value       = azurerm_virtual_network.vnet.name
 }
+
+output "vnet_subnets-name" {
+  description = "The ids of subnets created inside the newl vNet"
+  value       = azurerm_subnet.subnet.*.name
+}
