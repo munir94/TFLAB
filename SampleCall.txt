@@ -36,3 +36,12 @@ CALL Log Analytic MODULE
 module "law-01" {
   source = "./modules/diagnostic/log-analytics"
 }
+
+CALL Application Gateway MODULE
+
+ module "AppGW01" {
+   source     = "./modules/network/appgw"
+   agsnetname = module.vnet00.vnet_subnets-name.2
+   agsnetid   = module.vnet00.vnet_subnets.2
+
+ }
