@@ -52,9 +52,9 @@ module "k8s" {
 
 }
 
-module "AppGW01" {
-  source     = "./modules/network/appgw"
-  agsnetname = module.vnet00.vnet_subnets-name.2
-  agsnetid   = module.vnet00.vnet_subnets.2
+# module "AppGW01" {
+#   source     = "./modules/network/appgw"
+#   agsnetname = module.vnet00.vnet_subnets-name.2
+#   agsnetid   = module.vnet00.vnet_subnets.2
 
-}
+# }
