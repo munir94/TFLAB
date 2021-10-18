@@ -5,4 +5,4 @@ terraform.tfstate.backup
 secret.txt
 *.tfvar
 backup.txt
-main.tf
+main.tf 
