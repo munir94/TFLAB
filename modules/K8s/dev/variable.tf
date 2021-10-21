@@ -39,6 +39,6 @@ variable "aks-dns" {
 }
 variable "aks-version" {
   type = string 
-  description = "name for aks deployment"
+  description = "version for aks deployment"
   default = "1.20.9"
 }

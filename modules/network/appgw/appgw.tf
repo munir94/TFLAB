@@ -63,14 +63,7 @@ resource "azurerm_application_gateway" "agw" {
     public_ip_address_id = azurerm_public_ip.agip.id
   }
 
-  # backend_address_pool {
-  #   name = "${var.agname}-beap"
-  #   fqdns = [var.test_fqdn]
-  #   #fqdns = ["${local.test_fqdn}"]
-    
-  # }
-
-
+  
   backend_address_pool {
    name = "${var.agname}-beap"
    fqdns = [
@@ -105,3 +98,5 @@ resource "azurerm_application_gateway" "agw" {
   }
  
 }
+
+
