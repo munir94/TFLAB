@@ -24,3 +24,6 @@ output "aks-rg" {
   value = azurerm_resource_group.aks-rg
   
 }
+output "aks-name" {
+  value = azurerm_kubernetes_cluster.aks1.name
+}

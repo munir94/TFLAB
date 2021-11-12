@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "vnet-rg" {
      resource_group_name  = azurerm_resource_group.vnet-rg.name
      location             = azurerm_resource_group.vnet-rg.location
      address_space        = var.vnet-range
-     dns_servers          = var.vnet-dns
+     //dns_servers          = var.vnet-dns
      
  }
 

@@ -35,6 +35,9 @@ variable "ag_max" {
 variable "agsnetname" {
 
 }
+variable "agnetid" {
+
+}
 variable "agsnetid" {
 
 }
@@ -76,6 +79,10 @@ variable "aks-rg" {
 }
 
 variable "agrg_id" {
+}
+
+
+variable "client_key_base" {
 }
 
 

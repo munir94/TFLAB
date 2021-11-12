@@ -110,53 +110,57 @@ resource "azurerm_application_gateway" "agw" {
  
 }
 
-#user identity with SPN 
+#ROLE ASSIGNMENT 
 
-#create 
+# resource "azurerm_role_assignment" "ra1" {
+#   scope                = data.azurerm_subnet.kubesubnet.id
+#   role_definition_name = "Network Contributor"
+#   principal_id         = var.aks_service_principal_object_id
 
-# resource "azurerm_user_assigned_identity" "identity" {
-#   resource_group_name = azurerm_kubernetes_cluster.k8s.node_resource_group
-#   location            = azurerm_resource_group.rg.location
-#   name                = var.identity_name
+#   depends_on = [azurerm_virtual_network.test]
 # }
 
-
-#assign spn as contributor to aks subnet 
 resource "azurerm_role_assignment" "ra1" {
   scope                = var.akssnet_id
-  role_definition_name = "Contributor"
+  role_definition_name = "Network Contributor"
   principal_id         = var.spn_id
 
+  #depends_on = [azurerm_virtual_network.test]
 }
 
-#assign spn as reader to appgw rg
 resource "azurerm_role_assignment" "ra2" {
-  scope                = var.agrg_id
-  role_definition_name = "Reader"
-  principal_id         = var.spn_id
-
-}
-
-#assign spn as contributor to appgw 
-resource "azurerm_role_assignment" "ra3" {
-  scope                = azurerm_application_gateway.agw.id
-  role_definition_name = "Contributor"
-  principal_id         = var.spn_id
-
-}
-resource "azurerm_role_assignment" "ra4" {
   scope                = azurerm_user_assigned_identity.ag_uid.id
   role_definition_name = "Managed Identity Operator"
   principal_id         = var.spn_id
-  
+  depends_on           = [azurerm_user_assigned_identity.ag_uid]
 }
 
-# resource "azurerm_role_assignment" "agw" {
-#   scope                = var.subid
+# resource "azurerm_role_assignment" "ra3" {
+#   scope                = azurerm_application_gateway.network.id
 #   role_definition_name = "Contributor"
-#   principal_id         = var.spn_id
+#   principal_id         = azurerm_user_assigned_identity.ag_uid.principal_id
+#   depends_on = [
+#     azurerm_user_assigned_identity.testIdentity,
+#     azurerm_application_gateway.network,
+#   ]
 # }
 
+resource "azurerm_role_assignment" "ra3" {
+  scope                = var.agnetid
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_user_assigned_identity.ag_uid.principal_id
+#   depends_on = [
+#     azurerm_user_assigned_identity.testIdentity,
+#     azurerm_application_gateway.network,
+#   ]
+}
+
+resource "azurerm_role_assignment" "ra4" {
+  scope                = var.aks-rg
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_user_assigned_identity.ag_uid.principal_id
+  
+}
 
 
 #helm for aks app gw 
@@ -173,76 +177,38 @@ provider "helm" {
    }
    }
 
-# data "helm_repository" "helm_appgw" {
-#   name = "application-gateway-kubernetes-ingress"
-#   url  = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
-# }
 
+provider "null" {
+  version = ">2.1"
+}
+
+
+resource "null_resource" "main" {
+  provisioner "local-exec" {
+    command = "az aks get-credentials --resource-group ${var.agrg} --name aks01 --overwrite-existing" # && kubectl apply -f deployment.yaml" # && kubectl create namespace wavy-whatsapp && kubectl create secret tls wavy-global --key wildcard_wavy_global.key --cert wildcard_wavy_global.crt -n wavy-whatsapp"
+  }
+}
+   #backup
 
 resource "helm_release" "aad-pod-identity" {
    name       = "aad-pod-identity"
    repository = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
    chart      = "aad-pod-identity"
    timeout    = 120
+   
 
    set {
    name  = "rbac.enabled"
-   value = "true"
+   value = "false"
    }
 }
+
 resource "helm_release" "agw_ingress" {
-  name       = "ag"
+  name       = "ingress"
   repository = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
   chart      = "ingress-azure"
-  version    = "1.2.1"
- 
-set {
-  name  = "appgw.name"
-  value = azurerm_application_gateway.agw.name
-  }
+  version    = "1.4.0"
 
-  set {
-  name  = "appgw.resourceGroup"
-  value = var.agrg
-  }
-
-  set {
-  name  = "appgw.subscriptionId"
-  value = var.subid
-  }
-
-  set {
-  name  = "appgw.usePrivateIP"
-  value = false
-  }
-
-  set {
-  name  = "appgw.shared"
-  value = false
-  }
-
-  set {
-  name  = "armAuth.type"
-  value = "aadPodIdentity"
-  }
-
-  set {
-  name  = "rbac.enabled"
-  value = true
-  }
-
-  set {
-  name  = "armAuth.identityResourceID"
-  value = var.spn_id
-  }
-
-  set {
-  name  = "armAuth.identityClientID"
-  value = var.client_id
-  }
-}
-
-/*
   values = [
     <<EOF
 verbosityLevel: 3
@@ -253,8 +219,8 @@ appgw:
     shared: false
 armAuth:
     type: aadPodIdentity
-    identityResourceID: ${var.spn_id}
-    identityClientID:  ${var.client_id}
+    identityResourceID: ${azurerm_user_assigned_identity.ag_uid.id}
+    identityClientID:  ${azurerm_user_assigned_identity.ag_uid.client_id}
 rbac:
     enabled: false 
 aksClusterConfiguration:
@@ -263,5 +229,68 @@ EOF
 , 
   ]
 }
-*/
-#resourceGroup: ${azurerm_resource_group.ag-rg.id}
+
+
+
+
+# resource "helm_release" "agw_ingress" {
+#   name       = "ag"
+#   repository = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
+#   chart      = "ingress-azure"
+  
+ 
+# set {
+#   name  = "appgw.name"
+#   value = azurerm_application_gateway.agw.name
+#   }
+
+#   set {
+#   name  = "appgw.resourceGroup"
+#   value = lower(var.agrg)
+#   }
+
+#   set {
+#   name  = "appgw.subscriptionId"
+#   value = var.subid
+#   }
+
+#   set {
+#   name  = "appgw.usePrivateIP"
+#   value = false
+#   }
+
+#   set {
+#   name  = "appgw.shared"
+#   value = false
+#   }
+
+#   set {
+#   name  = "armAuth.type"
+#   value = "servicePrincipal"
+#   }
+#   set {
+#   name  = "armAuth.secretJSON"
+#   value = var.client_key
+#   }
+
+
+#   set {
+#   name  = "identityResourceID"
+#   value = "/subscriptions/ee31172f-3e56-4f55-94e8-6adce8c23e83/resourcegroups/AKS-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1"
+#   }
+#   set {
+#   name  = "identityClientID"
+#   value = "8e786c24-56fc-458b-9163-83093d532290"
+#   }
+
+# #1 change aad pod to SP
+#   //set {
+#   //name  = "armAuth.type"
+#   //value = "aadPodIdentity"
+#   //}
+
+#   set {
+#   name  = "rbac.enabled"
+#   value = false
+#   }
+# }

@@ -12,6 +12,10 @@ output "vnet-rg" {
   value       = azurerm_resource_group.vnet-rg.name
 }
 
+output "vnet-loc" {
+  description = "RG that contains the vNET"
+  value       = azurerm_resource_group.vnet-rg.location
+}
 output "vnet-id" {
   description = "ID of the vnet vNET"
   value       = azurerm_virtual_network.vnet.id
