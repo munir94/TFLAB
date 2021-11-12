@@ -202,7 +202,7 @@ resource "helm_release" "aad-pod-identity" {
    value = "false"
    }
 }
-
+/*
 resource "helm_release" "agw_ingress" {
   name       = "ingress"
   repository = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
@@ -229,40 +229,40 @@ EOF
 , 
   ]
 }
+*/
 
 
 
-
-# resource "helm_release" "agw_ingress" {
-#   name       = "ag"
-#   repository = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
-#   chart      = "ingress-azure"
-  
+resource "helm_release" "agw_ingress" {
+  name       = "ingress"
+  repository = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
+  chart      = "ingress-azure"
+  version = "1.4.0"
  
-# set {
-#   name  = "appgw.name"
-#   value = azurerm_application_gateway.agw.name
-#   }
+set {
+  name  = "appgw.name"
+  value = azurerm_application_gateway.agw.name
+  }
 
-#   set {
-#   name  = "appgw.resourceGroup"
-#   value = lower(var.agrg)
-#   }
+  set {
+  name  = "appgw.resourceGroup"
+  value = var.agrg
+  }
 
-#   set {
-#   name  = "appgw.subscriptionId"
-#   value = var.subid
-#   }
+  set {
+  name  = "appgw.subscriptionId"
+  value = var.subid
+  }
 
-#   set {
-#   name  = "appgw.usePrivateIP"
-#   value = false
-#   }
+  set {
+  name  = "appgw.usePrivateIP"
+  value = false
+  }
 
-#   set {
-#   name  = "appgw.shared"
-#   value = false
-#   }
+  set {
+  name  = "appgw.shared"
+  value = false
+  }
 
 #   set {
 #   name  = "armAuth.type"
@@ -273,24 +273,22 @@ EOF
 #   value = var.client_key
 #   }
 
+#1 change aad pod to SP
+  set {
+  name  = "armAuth.type"
+  value = "aadPodIdentity"
+  }
 
-#   set {
-#   name  = "identityResourceID"
-#   value = "/subscriptions/ee31172f-3e56-4f55-94e8-6adce8c23e83/resourcegroups/AKS-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1"
-#   }
-#   set {
-#   name  = "identityClientID"
-#   value = "8e786c24-56fc-458b-9163-83093d532290"
-#   }
-
-# #1 change aad pod to SP
-#   //set {
-#   //name  = "armAuth.type"
-#   //value = "aadPodIdentity"
-#   //}
-
-#   set {
-#   name  = "rbac.enabled"
-#   value = false
-#   }
-# }
+  set {
+  name  = "rbac.enabled"
+  value = false
+  }
+  set {
+  name  = "armAuth.identityResourceID"
+  value = azurerm_user_assigned_identity.ag_uid.id
+  }
+  set {
+  name  = "armAuth.identityClientID"
+  value = azurerm_user_assigned_identity.ag_uid.client_id
+  }
+}
