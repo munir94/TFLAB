@@ -62,3 +62,13 @@ CALL Application Gateway MODULE
   cluster_ca_certificate = base64decode(module.myaks.cluster_ca_certificate)
   aks-rg                 = module.myaks.aks-rg.id
 }
+
+#call sample app for agic 
+module "httpd" {
+  source = "./modules/k8s/testapp"
+  host                   = module.myaks.host
+  client_certificate     = base64decode(module.myaks.client_certificate)
+  client_key             = base64decode(module.myaks.client_key)
+  cluster_ca_certificate = base64decode(module.myaks.cluster_ca_certificate)
+
+}
