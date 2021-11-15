@@ -80,7 +80,7 @@ resource "azurerm_application_gateway" "agw" {
   backend_address_pool {
    name = "${var.agname}-beap"
    fqdns = [
-        "cafdemo.appserviceenvironment.net"
+        "dummy-website.com"
       ]
 }
 
@@ -187,7 +187,7 @@ provider "null" {
   version = ">2.1"
 }
 
-
+#change aks01 accordingly
 resource "null_resource" "main" {
   provisioner "local-exec" {
     command = "az aks get-credentials --resource-group ${var.agrg} --name aks01 --overwrite-existing" # && kubectl apply -f deployment.yaml" # && kubectl create namespace wavy-whatsapp && kubectl create secret tls wavy-global --key wildcard_wavy_global.key --cert wildcard_wavy_global.crt -n wavy-whatsapp"

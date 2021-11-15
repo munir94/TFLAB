@@ -78,12 +78,6 @@ variable "cluster_ca_certificate" {
 variable "aks-rg" {
 }
 
-variable "agrg_id" {
-}
-
-
-variable "client_key_base" {
-}
 
 
 

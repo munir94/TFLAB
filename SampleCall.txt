@@ -45,3 +45,20 @@ CALL Application Gateway MODULE
    agsnetid   = module.vnet00.vnet_subnets.2
 
  }
+
+ module "AGIC01" {
+  source             = "./modules/network/agic"
+  agrg               = module.myaks.aks-rg.name
+  loc                = module.myaks.aks-rg.location
+  agsnetname         = module.vnet00.vnet_subnets-name.2
+  agnetid            = module.vnet00.vnet-id
+  agsnetid           = module.vnet00.vnet_subnets.2
+  akssnet_id         = module.vnet00.vnet_subnets.1
+  spn_id             = "xxxx"
+  subid              = "xxxx"
+  host               = module.myaks.host
+  client_certificate = base64decode(module.myaks.client_certificate)
+  client_key         = base64decode(module.myaks.client_key)
+  cluster_ca_certificate = base64decode(module.myaks.cluster_ca_certificate)
+  aks-rg                 = module.myaks.aks-rg.id
+}
