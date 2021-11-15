@@ -111,6 +111,11 @@ resource "azurerm_application_gateway" "agw" {
 }
 
 #ROLE ASSIGNMENT 
+ 
+
+ ### IMPORTANT NOTICE ###
+ # Give AGIC's identity Contributor access to you App Gateway.
+ # Give AGIC's identity Reader access to the App Gateway resource group
 
 # resource "azurerm_role_assignment" "ra1" {
 #   scope                = data.azurerm_subnet.kubesubnet.id
