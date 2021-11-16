@@ -1,1 +1,0 @@
-Yaml for AGIC testing
