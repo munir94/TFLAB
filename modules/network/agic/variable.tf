@@ -78,6 +78,10 @@ variable "cluster_ca_certificate" {
 variable "aks-rg" {
 }
 
+variable "aks-name"{
+
+}
+
 
 
 
