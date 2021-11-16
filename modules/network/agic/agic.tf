@@ -183,11 +183,8 @@ provider "helm" {
    }
 
 
-provider "null" {
-  version = ">2.1"
-}
 
-#change aks01 accordingly
+#overwrite existing kube config 
 resource "null_resource" "main" {
   provisioner "local-exec" {
     command = "az aks get-credentials --resource-group ${var.agrg} --name ${var.aks-name} --overwrite-existing" # && kubectl apply -f deployment.yaml" # && kubectl create namespace wavy-whatsapp && kubectl create secret tls wavy-global --key wildcard_wavy_global.key --cert wildcard_wavy_global.crt -n wavy-whatsapp"

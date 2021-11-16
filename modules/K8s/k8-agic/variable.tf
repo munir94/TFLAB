@@ -14,6 +14,11 @@ variable "app" {
  default = "httpd"
 }
 
+variable "image" {
+    type = string
+    default = "httpd"
+}
+
 variable "app-port" {
     type = string
   default = "80"
