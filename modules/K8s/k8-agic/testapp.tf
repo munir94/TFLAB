@@ -33,7 +33,7 @@ provider "kubernetes" {
 
       spec {
         container {
-          name  = var.app
+          name  = var.app-name
           image = var.image
 
           port {

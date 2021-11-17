@@ -23,6 +23,10 @@ variable "app-port" {
     type = string
   default = "80"
 }
+variable "app-name" {
+    type = string
+  default = "httpd"
+}
 
 variable "app-tgport" {
 type = number
