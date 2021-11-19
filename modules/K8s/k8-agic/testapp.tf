@@ -62,12 +62,14 @@ resource "kubernetes_service" "app_svc" {
     }
   }
 }
-resource "kubernetes_ingress" "httpd_ing" {
+resource "kubernetes_ingress" "app_ing" {
   metadata {
     name = "${var.app}-ing"
 
     annotations = {
       "kubernetes.io/ingress.class" = "azure/application-gateway"
+      "appgw.ingress.kubernetes.io/connection-draining": "true"
+      "appgw.ingress.kubernetes.io/connection-draining-timeout": "30"
     }
   }
 

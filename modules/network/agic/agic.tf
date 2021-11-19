@@ -21,16 +21,16 @@ resource "azurerm_public_ip" "agip" {
   availability_zone = "Zone-Redundant"
 }
 
-locals {
-  test_backend_address_pool_name = "dummy"
-  test_fqdn = "dummy"
-}
+
 
 resource "azurerm_application_gateway" "agw" {
   name                = "${var.agname}-Ingress"
    resource_group_name = var.agrg
   location            = var.loc
-
+timeouts {
+  update = "5m"
+  create = "5m"
+}
   sku {
     name = var.ag_sku
     tier = var.ag_tier
@@ -69,18 +69,10 @@ resource "azurerm_application_gateway" "agw" {
     public_ip_address_id = azurerm_public_ip.agip.id
   }
 
-  # backend_address_pool {
-  #   name = "${var.agname}-beap"
-  #   fqdns = [var.test_fqdn]
-  #   #fqdns = ["${local.test_fqdn}"]
-    
-  # }
-
-
   backend_address_pool {
    name = "${var.agname}-beap"
    fqdns = [
-        "dummy-website.com"
+        "dummy"
       ]
 }
 
@@ -107,6 +99,20 @@ resource "azurerm_application_gateway" "agw" {
     backend_http_settings_name = "${var.agname}-be-htst"
   
   }
+  lifecycle {
+  ignore_changes = [
+    backend_address_pool,
+    backend_http_settings,
+    frontend_port,
+    http_listener,
+    probe,
+    redirect_configuration,
+    request_routing_rule,
+    ssl_certificate,
+    tags,
+    url_path_map,
+  ]
+}
  
 }
 
@@ -292,5 +298,10 @@ set {
   set {
   name  = "armAuth.identityClientID"
   value = azurerm_user_assigned_identity.ag_uid.client_id
+  }
+
+  set {
+    name = "reconcilePeriodSeconds"
+    value = "30"
   }
 }
