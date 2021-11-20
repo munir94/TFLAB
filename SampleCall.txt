@@ -84,12 +84,25 @@ CALL Application Gateway MODULE
   aks-rg                 = module.myaks.aks-rg.id
 }
 
+
+locals {
+  #image for application 
+  app1 = "httpd"
+  
+  #replica count 
+  replica = "2" 
+}
 #call sample app for agic 
 module "httpd" {
-  source = "./modules/k8s/testapp"
+  source                 = "./modules/k8s/k8-agic"
   host                   = module.myaks.host
   client_certificate     = base64decode(module.myaks.client_certificate)
   client_key             = base64decode(module.myaks.client_key)
   cluster_ca_certificate = base64decode(module.myaks.cluster_ca_certificate)
-
+  app                    = local.app1
+  image                  = local.app1
+  app-name               = local.app1
+  replica                = local.replica
+  app-port               = "80"
+  app-tgport             = 80
 }
