@@ -238,8 +238,12 @@ EOF
   ]
 }
 */
-
-
+ 
+resource "null_resource" "helm" {
+  provisioner "local-exec" {
+    command = "helm repo update"
+  }
+}
 
 resource "helm_release" "agw_ingress" {
   name       = "ingress"

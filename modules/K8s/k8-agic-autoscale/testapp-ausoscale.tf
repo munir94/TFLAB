@@ -16,8 +16,7 @@ provider "kubernetes" {
   }
 
   spec {
-    replicas = var.replica
-
+ replicas = var.replica
     selector {
       match_labels = {
         app = var.app
@@ -29,7 +28,9 @@ provider "kubernetes" {
         labels = {
           app = var.app
         }
+        
       }
+      
 
       spec {
         container {
@@ -97,6 +98,24 @@ resource "kubernetes_ingress" "app_ing" {
         }
       }
     }
+  }
+}
+
+resource "kubernetes_horizontal_pod_autoscaler" "app-scale" {
+  metadata {
+    name = "${var.app}-scale"
+  }
+
+  spec {
+    scale_target_ref {
+      kind        = "${var.app}-deployment"
+      name        = var.app
+      #api_version = "apps/v1"
+    }
+
+    min_replicas                      = var.replica
+    max_replicas                      = var.max_replica
+    target_cpu_utilization_percentage = var.scale
   }
 }
 /*
