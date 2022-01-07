@@ -106,3 +106,30 @@ module "httpd" {
   app-port               = "80"
   app-tgport             = 80
 }
+
+CALL RG MODULE
+module "rg01" {
+    source = "./modules/rg" 
+    rgname = "vm01"
+    region = "southeastasia"
+}
+
+CALL Windows VM  MODULE
+module "winvm01" {
+  source = "./modules/compute/winvm"
+  vmname = "TFVM"
+  subnet_id = module.vnet00.vnet_subnets.0
+//refer to output from rg
+ vmrg = module.nsg01.rgname  
+  rgloc = module.nsg01.region
+}
+
+CALL Linux VM  MODULE
+module "linuxvm01" {
+  source = "./modules/compute/linuxvm"
+  vmname = "LINUXVM"
+  subnet_id = module.vnet00.vnet_subnets.0
+  //refer to output from rg
+  vmrg = module.nsg01.rgname  
+  rgloc = module.nsg01.region
+}
