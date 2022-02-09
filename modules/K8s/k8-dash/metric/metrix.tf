@@ -171,7 +171,7 @@ resource "kubernetes_deployment" "metrics_server" {
       spec {
         volume {
           name      = "tmp-dir"
-          empty_dir = {}
+          #empty_dir = {}
         }
 
         container {
@@ -241,7 +241,7 @@ resource "kubernetes_deployment" "metrics_server" {
   }
 }
 
-resource "kubernetes_api_service" "v_1_beta_1_.metrics.k_8_s.io" {
+resource "kubernetes_api_service" "v1_metric" {
   metadata {
     name = "v1beta1.metrics.k8s.io"
 
