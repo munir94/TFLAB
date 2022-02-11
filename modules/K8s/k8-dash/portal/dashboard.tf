@@ -220,7 +220,7 @@ resource "kubernetes_deployment" "kubernetes_dashboard" {
 
         volume {
           name      = "tmp-volume"
-          #empty_dir = {}
+          empty_dir  {}
         }
 
         container {
@@ -331,7 +331,7 @@ resource "kubernetes_deployment" "dashboard_metrics_scraper" {
       spec {
         volume {
           name      = "tmp-volume"
-          #empty_dir = {}
+          empty_dir {}
         }
 
         container {
