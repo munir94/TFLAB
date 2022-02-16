@@ -282,7 +282,7 @@ resource "kubernetes_pod_disruption_budget" "metrics_server" {
   }
 }
 
-resource "kubernetes_api_service" "v_1_beta_1_.metrics.k_8_s.io" {
+resource "kubernetes_api_service" "v1beta1metricsk8sio" {
   metadata {
     name = "v1beta1.metrics.k8s.io"
 
