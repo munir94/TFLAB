@@ -8,4 +8,7 @@ backup.txt
 main-run.tf
 aksdev.tfvars
 powershell
+main.tf
+*.binary
+*.json
 
