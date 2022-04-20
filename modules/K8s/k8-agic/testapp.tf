@@ -36,10 +36,6 @@ provider "kubernetes" {
           name  = var.app-name
           image = var.image
         resources {
-            limits = {
-              cpu    = "0.5"
-              memory = "512Mi"
-            }
             requests = {
               cpu    = "250m"
               memory = "50Mi"
