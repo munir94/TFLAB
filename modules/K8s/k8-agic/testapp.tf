@@ -67,34 +67,67 @@ resource "kubernetes_service" "app_svc" {
     }
   }
 }
-resource "kubernetes_ingress" "app_ing" {
-  metadata {
-    name = "${var.app}-ing"
+# resource "kubernetes_ingress_v1" "app_ing" {
+#   metadata {
+#     name = "${var.app}-ing"
 
-    annotations = {
-      "kubernetes.io/ingress.class" = "azure/application-gateway"
-      "appgw.ingress.kubernetes.io/connection-draining": "true"
-      "appgw.ingress.kubernetes.io/connection-draining-timeout": "30"
+#     annotations = {
+#       "kubernetes.io/ingress.class" = "azure/application-gateway"
+#     }
+#   }
+
+#   spec {
+#     rule {
+#       host = "${var.app}.1xxx.com"
+
+#       http {
+#         path {
+#           path = "/"
+
+#           backend {
+#             service_name = "${var.app}-svc"
+#             service_port = var.app-tgport
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+
+resource "kubernetes_ingress_v1" "app_ing" {
+
+  
+
+    metadata {
+        name = "${var.app}-ing"
+        #namespace = "nginx1"
     }
-  }
 
-  spec {
-    rule {
-      host = "${var.app}.1xxx.com"
+    spec {
+        rule {
 
-      http {
-        path {
-          path = "/"
+            host = "${var.app}.1xxx.com"
 
-          backend {
-            service_name = "${var.app}-svc"
-            service_port = var.app-tgport
-          }
+            http {
+
+                path {
+                    path = "/"
+
+                    backend {
+                        service {
+                            name = "${var.app}-svc"
+                            port {
+                                number = var.app-tgport
+                            }
+                        }
+                    }
+
+                }
+            }
         }
-      }
     }
-  }
 }
+
 /*
 resource "kubernetes_deployment" "httpd_deployment" {
   metadata {
