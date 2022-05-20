@@ -11,6 +11,8 @@ resource "azurerm_user_assigned_identity" "ag_uid" {
   location            = var.loc
   name = "identity1"
 }
+
+
 resource "azurerm_public_ip" "agip" {
   name                = var.agip
   resource_group_name = var.agrg

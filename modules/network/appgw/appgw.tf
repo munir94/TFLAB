@@ -21,7 +21,7 @@ locals {
 }
 
 resource "azurerm_application_gateway" "agw" {
-  name                = "${var.agname}-Ingress"
+  name                = "${var.agname}-GW01"
   resource_group_name = azurerm_resource_group.ag-rg.name
   location            = azurerm_resource_group.ag-rg.location
 
@@ -96,6 +96,20 @@ resource "azurerm_application_gateway" "agw" {
     # backend_address_pool_name  = "${var.agname}-beap"
     # backend_http_settings_name = "${var.agname}-be-htst"
   }
+  lifecycle {
+  ignore_changes = [
+    backend_address_pool,
+    backend_http_settings,
+    frontend_port,
+    http_listener,
+    probe,
+    redirect_configuration,
+    request_routing_rule,
+    ssl_certificate,
+    tags,
+    url_path_map,
+  ]
+}
  
 }
 
