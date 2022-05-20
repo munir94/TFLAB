@@ -76,7 +76,7 @@ resource "helm_release" "traefik" {
     value = "true"
   }
     
-    # # Default Redirect
+    # Default Redirect
     # set {
     #     name  = "ports.web.redirectTo"
     #     value = "websecure"
@@ -87,43 +87,7 @@ resource "helm_release" "traefik" {
     #     name  = "ports.websecure.tls.enabled"
     #     value = "true"
     # }
-
-
-#   set {
-#    name  =  "--accesslog"
-#    value = true
-#  }
-#  set {
-#    name  =  "--accesslog.format"
-#    value = "json"
-#  }
-#  set {
-#    name  =  "--log.level"
-#    value = "DEBUG"
-#  }
-
-#  set {
-#    name  =  "access.log"
-#    value = "json"
-#  }
-#  set {
-#    name  =  "additionalArguments.log.level"
-#    value = "DEBUG"
-#  }
-  # additionalArguments:
-  # - "--accesslog=true"
-  # - "--accesslog.format=json"
-  # - "--log.level=DEBUG"
-
 }
- 
-# resource "null_resource" "helm" {
-#   provisioner "local-exec" {
-#     command = "helm repo update"
-#   }
-# }
-
-
 # Add the Traefik Repo
 #helm repo add traefik https://helm.traefik.io/traefik
 # Update Helm
