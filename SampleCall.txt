@@ -71,7 +71,7 @@ CALL Application Gateway MODULE
   source             = "./modules/network/agic"
   agrg               = module.myaks.aks-rg.name
   loc                = module.myaks.aks-rg.location
-  agsnetname         = module.vnet00.vnet_subnets-name.2
+  agsnetname         = module.vnet00.vnet_subnets_name.2
   agnetid            = module.vnet00.vnet-id
   agsnetid           = module.vnet00.vnet_subnets.2
   akssnet_id         = module.vnet00.vnet_subnets.1
