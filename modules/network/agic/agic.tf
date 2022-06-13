@@ -251,7 +251,7 @@ resource "helm_release" "agw_ingress" {
   name       = "ingress"
   repository = "https://appgwingress.blob.core.windows.net/ingress-azure-helm-package/"
   chart      = "ingress-azure"
-  version = "1.4.0"
+ # version = "1.4.0"
  
 set {
   name  = "appgw.name"
