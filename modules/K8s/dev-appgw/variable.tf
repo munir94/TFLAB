@@ -40,7 +40,7 @@ variable "aks-dns" {
 variable "aks-version" {
   type = string 
   description = "version for aks deployment"
-  default = "1.22.4"
+  default = "1.24.0"
 }
 variable "appgwid" {
   type = string 
