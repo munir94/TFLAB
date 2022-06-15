@@ -11,7 +11,7 @@ main.tf
 *.binary
 *.json
 Azure.conf
-core 
+dev 
 prod
 core
 

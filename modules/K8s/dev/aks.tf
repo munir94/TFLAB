@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "aks-rg" {
   name     = "aks-rg"
-  location = "southeastasia"
+  location = var.aks-region
 }
 
 resource "azurerm_kubernetes_cluster" "aks1" {

@@ -42,3 +42,8 @@ variable "aks-version" {
   description = "version for aks deployment"
   default = "1.24.0"
 }
+variable "aks-region" {
+  type = string 
+  description = "region for aks deployment"
+  default = "southeastasia"
+}
