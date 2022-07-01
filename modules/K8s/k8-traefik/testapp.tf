@@ -46,6 +46,7 @@ resource "kubernetes_deployment" "nginx1" {
             spec {
                 container {
                     image = "nginxdemos/hello"
+                    #image = "nginx:latest"
                     name  = "nginx"
 
                     port {
@@ -88,11 +89,10 @@ resource "kubernetes_ingress_v1" "nginx1" {
         name = "nginx1"
         namespace = "nginx1"
     }
-
     spec {
         rule {
 
-            host = "vote.munirtajudin.xyz"
+            host = "nginx.munirtajudin.xyz"
 
             http {
 

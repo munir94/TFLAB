@@ -74,19 +74,24 @@ resource "helm_release" "traefik" {
     set {
     name  = "ports.traefik.expose"
     value = "true"
+    #port 9000
   }
     
-    # Default Redirect
-    # set {
-    #     name  = "ports.web.redirectTo"
-    #     value = "websecure"
+    #Default Redirect
+    set {
+        name  = "ports.web.redirectTo"
+        value = "websecure"
+    }
+    #  set {
+    #     name  = "entryPoints.tcpep.address"
+    #     value = "9090/tcp"
     # }
 
-    # # Enable TLS on Websecure
-    # set {
-    #     name  = "ports.websecure.tls.enabled"
-    #     value = "true"
-    # }
+    # Enable TLS on Websecure
+    set {
+        name  = "ports.websecure.tls.enabled"
+        value = "true"
+    }
 }
 # Add the Traefik Repo
 #helm repo add traefik https://helm.traefik.io/traefik
