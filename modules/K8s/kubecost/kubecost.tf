@@ -23,14 +23,14 @@ resource "helm_release" "kubecost-helm" {
     name  = "kubecostProductConfigs.clusterName"
     value = var.aks-name
   }
- set {
-    name  = "ingress.enabled"
-    value = true
-  }
-  set {
-    name  = "ingress.hosts"
-    value = "kubecost.munirtajudin.xyz"
-  }
+#  set {
+#     name  = "ingress.enabled"
+#     value = true
+#   }
+#   set {
+#     name  = "ingress.hosts"
+#     value = "kubecost.munirtajudin.xyz"
+#   }
  
 
  # Set the currency
