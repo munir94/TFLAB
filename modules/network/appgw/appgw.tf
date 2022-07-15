@@ -66,9 +66,9 @@ resource "azurerm_application_gateway" "agw" {
   
   backend_address_pool {
    name = "${var.agname}-beap"
-   fqdns = [
-        "cafdemo.appserviceenvironment.net"
-      ]
+  #  fqdns = [
+  #       "xx.xxx.xxx"
+  #     ]
 }
 
   backend_http_settings {
