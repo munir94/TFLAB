@@ -100,13 +100,17 @@ resource "kubernetes_ingress_v1" "app_ing" {
 
     metadata {
         name = "${var.app}-ing"
-        #namespace = "nginx1"
+        
+
+        annotations = {
+      "kubernetes.io/ingress.class" = "azure/application-gateway"
+    }
     }
 
     spec {
         rule {
 
-            host = "${var.app}.1xxx.com"
+            host = "${var.app}.agic.1xxx.com"
 
             http {
 
