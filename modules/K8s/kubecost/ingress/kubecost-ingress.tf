@@ -17,9 +17,7 @@ resource "kubernetes_ingress_v1" "kubecost_ingress_tls01" {
     namespace = kubernetes_namespace.kubecost.metadata[0].name
     annotations = {
       "traefik.ingress.kubernetes.io/auth-realm" = "Authentication Required - kubecost"
-
       "traefik.ingress.kubernetes.io/auth-secret" = "basic-auth"
-
       "traefik.ingress.kubernetes.io/auth-type" = "basic"
     }
   }
@@ -54,39 +52,5 @@ resource "kubernetes_ingress_v1" "kubecost_ingress_tls01" {
     }
   }
 }
-# resource "kubernetes_ingress_v1" "kubecost_alb_ingress" {
-#   metadata {
-#     name = "kubecost-alb-ingress"
-
-#     annotations = {
-#     #   "alb.ingress.kubernetes.io/scheme" = "internet-facing"
-
-#     #   "alb.ingress.kubernetes.io/target-type" = "ip"
-
-#       "kubernetes.io/ingress.class" = "LoadBalancer"
-#     }
-#   }
-
-#   spec {
-#     rule {
-#       http {
-#         path {
-#           path      = "/"
-#           path_type = "Prefix"
-
-#           backend {
-#             service {
-#               name = "kubecost-cost-analyzer"
-
-#               port {
-#                 number = 9090
-#               }
-#             }
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
 
 
