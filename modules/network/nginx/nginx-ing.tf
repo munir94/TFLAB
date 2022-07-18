@@ -1,19 +1,14 @@
 #https://github.com/Azure-Terraform/terraform-azurerm-kubernetes-nginx-ingress
 
-resource "azurerm_resource_group" "nginx-rg" {
-  name     = var.ngxrg
-  location = var.loc
-}
+# resource "azurerm_resource_group" "nginx-rg" {
+#   name     = var.ngxrg
+#   location = var.loc
+# }
 
-resource "azurerm_role_assignment" "ngx-ra01" {
-  scope                = azurerm_resource_group.nginx-rg.id
-  role_definition_name = "Network Contributor"
-  principal_id         = var.aksngx-spnid
-  
-}
+
 resource "azurerm_public_ip" "ngxip" {
   name                = var.ngxip
-  resource_group_name = "mc_aks-rg_${var.aks-name}_${var.loc}"
+  resource_group_name = "MC_${var.aks-rg}_${var.aks-name}_${var.loc}"
   location            = var.loc
   allocation_method   = "Static"
   sku = "Standard"
@@ -21,6 +16,12 @@ resource "azurerm_public_ip" "ngxip" {
   availability_zone = "Zone-Redundant"
 }
 
+# resource "azurerm_role_assignment" "ngx-ra01" {
+#   scope                = azurerm_public_ip.ngxip.resource_group_name
+#   role_definition_name = "Network Contributor"
+#   principal_id         = var.aksngx-spnid
+  
+# }
 
 resource "kubernetes_namespace" "nginx" {
     metadata {
@@ -65,4 +66,10 @@ resource "helm_release" "nginx" {
     name  = "controller.service.loadBalancerIP"
     value = azurerm_public_ip.ngxip.ip_address
   }
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path"
+    value = "/healthz"
+  }
 }
+
+

@@ -12,14 +12,17 @@ variable "ngxip" {
 
 }
 variable "ngx-ns" {
-  default = "traefik-ns"
+  default = "nginx-ns"
  type = string
 }
 variable "aks-rg" {
+  type = string
 }
 variable "aks-name" {
+  type = string
 }
 variable "aksngx-spnid" {
+  
 }
 
 
