@@ -21,9 +21,7 @@ variable "aks-rg" {
 variable "aks-name" {
   type = string
 }
-variable "aksngx-spnid" {
-  
-}
+
 
 
 

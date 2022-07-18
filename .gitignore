@@ -8,6 +8,7 @@ backup.txt
 main-run.tf
 powershell
 main.tf
+main.txt
 *.binary
 *.json
 Azure.conf
