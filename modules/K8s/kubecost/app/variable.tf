@@ -6,6 +6,10 @@ variable "sub-id"{
     type = string 
     
 }
+variable "spn-id"{
+    type = string 
+    
+}
 variable "client-id"{
     type = string 
     
@@ -28,3 +32,31 @@ variable "url" {
     default = "kubecost.munirtajudin.xyz"
   
 }
+variable "saname" {
+    type = string
+   
+  
+}
+variable "sakey" {
+    type = string
+   
+  
+}
+variable "sacontainer" {
+    type = string
+   
+  
+}
+variable "sapath" {
+    type = string
+   
+  
+}
+variable "azcloud" {
+    type = string
+   default = "public"
+}
+
+
+
+

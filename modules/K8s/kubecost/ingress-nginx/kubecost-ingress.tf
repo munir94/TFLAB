@@ -1,7 +1,7 @@
 resource "kubernetes_secret" "basic_auth" {
   metadata {
     name      = "basic-auth"
-    namespace =  kubernetes_namespace.kubecost.metadata[0].name
+    namespace =  var.namespace
   }
 
   data = {
@@ -14,16 +14,16 @@ resource "kubernetes_secret" "basic_auth" {
 resource "kubernetes_ingress_v1" "kubecost_ingress_tls01" {
   metadata {
     name = "kubecost-ingress-tls01"
-    namespace = kubernetes_namespace.kubecost.metadata[0].name
-    annotations = {
-      "traefik.ingress.kubernetes.io/auth-realm" = "Authentication Required - kubecost"
-      "traefik.ingress.kubernetes.io/auth-secret" = "basic-auth"
-      "traefik.ingress.kubernetes.io/auth-type" = "basic"
-    }
+    namespace = var.namespace
+    # annotations = {
+    #   "nginx.ingress.kubernetes.io/auth-realm" = "Authentication Required - kubecost"
+    #   "nginx.ingress.kubernetes.io/auth-secret" = "basic-auth"
+    #   "nginx.ingress.kubernetes.io/auth-type" = "basic"
+    # }
   }
 
   spec {
-    ingress_class_name = "traefik"
+    ingress_class_name = "nginx"
 
     # tls {
     #   hosts       = ["kubecost.munirtajudin.xyz"]
@@ -32,7 +32,7 @@ resource "kubernetes_ingress_v1" "kubecost_ingress_tls01" {
 
     rule {
       #host = "cost-analyzer.local"
-      host = "kubecost.munirtajudin.xyz"
+      host = "${var.hostname}.munirtajudin.xyz"
       http {
         path {
           path      = "/"

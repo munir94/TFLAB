@@ -44,7 +44,8 @@ resource "azurerm_kubernetes_cluster" "aks1" {
 
   tags = {
     Environment = "DEV"
-  }
+    kubernetes_cluster = var.aks-name
+  } 
 }
 
 # resource "null_resource" "get-aks-cred" {
