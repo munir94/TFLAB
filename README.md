@@ -19,7 +19,7 @@ Module Created
 6. Application Gateway Ingress Controller  
 7. Network Security Group
 8. Ingress for kubernetes 
-9. Additional tools for Kuburnetes 
+9. Additional tools for kubernetes
 
 
 
