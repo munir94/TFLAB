@@ -52,7 +52,7 @@ resource "kubernetes_secret" "kubecost_sec" {
 
 
 
-resource "helm_release" "kubecost-helm" {
+resource "helm_release" "kubecost-helm"{
    name       = "kubecost"
    repository = "https://kubecost.github.io/cost-analyzer/"
    chart      = "cost-analyzer"
