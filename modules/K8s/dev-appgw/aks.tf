@@ -26,6 +26,9 @@ resource "azurerm_kubernetes_cluster" "aks1" {
 
   default_node_pool {
     name       = "default"
+    enable_auto_scaling = true
+    min_count = 1
+    max_count = 3
     node_count = 1
     vm_size    = "Standard_D2_v3"
     type = "VirtualMachineScaleSets"
@@ -82,6 +85,11 @@ resource "azurerm_kubernetes_cluster" "aks1" {
   tags = {
     Environment = "DEV"
   }
+     lifecycle {
+  ignore_changes = [
+   default_node_pool,
+  ]
+}
 }
 
 # resource "null_resource" "get-aks-cred" {

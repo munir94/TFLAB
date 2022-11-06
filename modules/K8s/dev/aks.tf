@@ -49,6 +49,11 @@ resource "azurerm_kubernetes_cluster" "aks1" {
     Environment = "DEV"
     kubernetes_cluster = var.aks-name
   } 
+    lifecycle {
+  ignore_changes = [
+   default_node_pool,
+  ]
+}
 }
 
 # resource "null_resource" "get-aks-cred" {
