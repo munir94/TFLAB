@@ -21,6 +21,14 @@ Module Created
 8. Ingress for kubernetes 
 9. Additional tools for kubernetes
 
+### Remark
+|Remark| Description |
+|---|---|
+| ❌| Not yet implemented|
+| ✔ | Already implemented|
+| ⚠ | Will not be implemented|
+
+
 
 
 
